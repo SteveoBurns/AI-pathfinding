@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
+
     public void PlayGame()
     {
         SceneManager.LoadScene("Maze");
