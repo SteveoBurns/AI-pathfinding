@@ -9,6 +9,8 @@ public class Agent : MonoBehaviour
     private NavMeshAgent agent;
     private Waypoint[] waypoints;
 
+    
+
     //Will give us a random waypoint in the array as a variable everytime I access it
     private Waypoint RandomPoint => waypoints[Random.Range(0, waypoints.Length)];
 
@@ -31,6 +33,12 @@ public class Agent : MonoBehaviour
             //Tell the agent to move to a random position in the scene waypoints
             agent.SetDestination(RandomPoint.Position);
 
+            /*
+            if (doors.redDoorsOpen == true)
+                doors.redDoorsOpen = false;
+            else
+                doors.redDoorsOpen = true;
+            */
         }
 
     }

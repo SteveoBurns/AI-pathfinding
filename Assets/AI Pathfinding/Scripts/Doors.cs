@@ -18,11 +18,14 @@ public class Doors : MonoBehaviour
     private float closePos = 0;
     private float openPos = -2.1f;
 
+    private float doorTimer = 0;
+    [SerializeField] private float doorTimerLength = 10;
 
 
     // Start is called before the first frame update
     void Start()
     {
+
         redDoorsOpen = false;
         //closePos = gameObject.transform.position.y;
         //openPos = transform.position.y - 2.1f;
@@ -33,6 +36,17 @@ public class Doors : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        #region Door Timer
+        if (doorTimer < doorTimerLength)
+            doorTimer += Time.deltaTime;
+        else
+        {
+            redDoorsOpen = !redDoorsOpen;
+            doorTimer = 0;
+        }    
+        #endregion
+
+
         if (redDoorsOpen) // need to put another condition like a counter here to stop it happening every frame.
         {
             // Open all red doors
