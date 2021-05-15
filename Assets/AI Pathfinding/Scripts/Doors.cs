@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+
 
 public class Doors : MonoBehaviour
 {
@@ -27,8 +27,7 @@ public class Doors : MonoBehaviour
     {
 
         redDoorsOpen = false;
-        //closePos = gameObject.transform.position.y;
-        //openPos = transform.position.y - 2.1f;
+        
     }
 
 
@@ -36,6 +35,7 @@ public class Doors : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Timer for the doors to be automated
         #region Door Timer
         if (doorTimer < doorTimerLength)
             doorTimer += Time.deltaTime;
@@ -47,7 +47,7 @@ public class Doors : MonoBehaviour
         #endregion
 
 
-        if (redDoorsOpen) // need to put another condition like a counter here to stop it happening every frame.
+        if (redDoorsOpen) 
         {
             // Open all red doors
             foreach (GameObject door in redDoors)
@@ -112,16 +112,7 @@ public class Doors : MonoBehaviour
             }
         }
     }
-
-    public void OpenDoors()
-    {
-       transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, openPos, 0.005f), transform.position.z);
-    }
-    public void CloseDoors()
-    {
-        transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, closePos, 0.005f), transform.position.z);
-    }
-
+    
     
 
 

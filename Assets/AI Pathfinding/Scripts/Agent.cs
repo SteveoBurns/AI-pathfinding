@@ -18,12 +18,14 @@ public class Agent : MonoBehaviour
     void Start()
     {
         agent = gameObject.GetComponent<NavMeshAgent>();
+
         //FindObjectsOfType gets every instance of this componant in the scene
         waypoints = FindObjectsOfType<Waypoint>();
 
         //Tell the agent to move to a random position in the scene waypoints
         agent.SetDestination(RandomPoint.Position);
     }
+
     // Update is called once per frame
     void Update()
     {
@@ -33,13 +35,7 @@ public class Agent : MonoBehaviour
             //Tell the agent to move to a random position in the scene waypoints
             agent.SetDestination(RandomPoint.Position);
 
-            /*
-            if (doors.redDoorsOpen == true)
-                doors.redDoorsOpen = false;
-            else
-                doors.redDoorsOpen = true;
-            */
-        }
+                    }
 
     }
 }
