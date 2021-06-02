@@ -3,29 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
-public class AgentSmartAI : MonoBehaviour
+namespace SmartAI
 {
-    private NavMeshAgent agent;
-    [SerializeField] private GameObject doorSwitch;
-
-    // Start is called before the first frame update
-    void Start()
+    [RequireComponent(typeof(NavMeshAgent))]
+    public class AgentSmartAI : MonoBehaviour
     {
-        agent = gameObject.GetComponent<NavMeshAgent>();
+        private NavMeshAgent agent;
+        [SerializeField] private GameObject doorSwitch;
 
-        agent.SetDestination(doorSwitch.transform.position);
-    }
+        public Waypoint[] waypoints;
 
-    
-    // Update is called once per frame
-    void Update()
-    {
-        if (!agent.pathPending && agent.remainingDistance < 0.1f)
+        // Start is called before the first frame update
+        void Start()
         {
+            agent = gameObject.GetComponent<NavMeshAgent>();
 
-            
+            agent.SetDestination(doorSwitch.transform.position);
 
+            waypoints = FindObjectsOfType<Waypoint>();
+        }
+
+
+        // Update is called once per frame
+        void Update()
+        {
+            if (!agent.pathPending && agent.remainingDistance < 0.1f)
+            {
+
+
+
+            }
         }
     }
 }

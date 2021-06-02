@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SmartAI;
 
 namespace StateMachines
 {
@@ -43,7 +44,7 @@ namespace StateMachines
             states.Add(States.FindSwitch, FindSwitch );
             states.Add(States.FindCollectable, FindCollectable);
 
-            
+            // How do I find the waypoints if this class can't be in the scene?
             
         }
 
