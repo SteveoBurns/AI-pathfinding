@@ -17,11 +17,7 @@ public class AgentSmartAI : MonoBehaviour
         agent.SetDestination(doorSwitch.transform.position);
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("Character collided");
-    }
-
+    
     // Update is called once per frame
     void Update()
     {

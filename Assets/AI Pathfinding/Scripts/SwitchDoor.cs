@@ -35,3 +35,11 @@ public class SwitchDoor : MonoBehaviour
         }
     }
 }
+/*Journal
+ * This took a bit to work out that I should put the open door function into a coroutine, and even then, that i should put it into a while loop.
+ * But I got it in the end and now it works.
+ * 
+ * Also, that I had to use on trigger enter vs on collision enter. Im not sure why oncollision enter didn't work, but trigger does, so all G!
+ * 
+ * 
+ */
