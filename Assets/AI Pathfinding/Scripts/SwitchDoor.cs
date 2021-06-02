@@ -4,30 +4,24 @@ using UnityEngine;
 
 public class SwitchDoor : MonoBehaviour
 {
+    [Header("Door to Open")]
     [SerializeField] private GameObject door;
-
-    //private float closePos = 0;
+    
     private float openPos = -2.1f;
+
 
     public void OnTriggerEnter(Collider collider)
     {
-        Debug.Log("collision");
-        StartCoroutine(OpenDoor());
-        
+        StartCoroutine(OpenDoor());       
     }
-
-    private void Update()
-    {
         
-        //StartCoroutine(OpenDoor());
-        
-    }
 
-
+    /// <summary>
+    /// This handles the opening of the corresponding door.
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator OpenDoor()
     {        
-
-
         while (door.transform.position.y != openPos)
         {
             Vector3 doorPos = new Vector3(door.gameObject.transform.position.x, door.gameObject.transform.position.y, door.gameObject.transform.position.z);

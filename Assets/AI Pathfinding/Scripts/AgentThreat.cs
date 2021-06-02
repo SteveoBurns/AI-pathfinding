@@ -4,15 +4,15 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class Agent : MonoBehaviour
+public class AgentThreat : MonoBehaviour
 {
     private NavMeshAgent agent;
-    private Waypoint[] waypoints;
+    private ThreatWaypoint[] waypoints;
 
-    
+
 
     //Will give us a random waypoint in the array as a variable everytime I access it
-    private Waypoint RandomPoint => waypoints[Random.Range(0, waypoints.Length)];
+    private ThreatWaypoint RandomPoint => waypoints[Random.Range(0, waypoints.Length)];
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +20,7 @@ public class Agent : MonoBehaviour
         agent = gameObject.GetComponent<NavMeshAgent>();
 
         //FindObjectsOfType gets every instance of this componant in the scene
-        waypoints = FindObjectsOfType<Waypoint>();
+        waypoints = FindObjectsOfType<ThreatWaypoint>();
 
         //Tell the agent to move to a random position in the scene waypoints
         agent.SetDestination(RandomPoint.Position);
@@ -39,4 +39,3 @@ public class Agent : MonoBehaviour
 
     }
 }
-
