@@ -65,7 +65,12 @@ namespace StateMachines
         /// </summary>
         private void MainPath()
         {
-             
+             /*What is the index? 
+              * set the next way point using the index.
+              * if destination reached, index += 1
+              * set next waypoint
+              * 
+              */
         }
 
         /// <summary>
@@ -74,7 +79,10 @@ namespace StateMachines
         /// </summary>
         private void FindSwitch()
         {
-
+            /*get switchwaypoints
+             * distance test and set closest as destination
+             * when reached, switch to main path.
+             */
         }
 
         /// <summary>
@@ -82,7 +90,10 @@ namespace StateMachines
         /// </summary>
         private void FindCollectable()
         {
-
+            /* get collectable waypoints
+             * cycle through all in a for loop?
+             * when done switch back to main path.
+             */
         }
     }
     /*Journal
