@@ -16,6 +16,7 @@ namespace StateMachines
 
     // The delegate that dictates what the functions for each state will look like.
     public delegate void StateDelegate();
+
     [System.Serializable]
     public class StateMachine 
     {
@@ -28,8 +29,7 @@ namespace StateMachines
         public Waypoint[] waypoints;
         public SwitchWaypoint[] switchWaypoints;
         public CollectableWaypoint[] collectableWaypoints;
-
-        public int waypointIndex = 0;
+        public int waypointIndex = 1;
 
         // This is used to change the state from anywhere within the code that has reference to the state machine.
         public void ChangeState(States _newState)
@@ -38,25 +38,17 @@ namespace StateMachines
                 currentState = _newState;
         }
 
-        public StateMachine(NavMeshAgent _agent)
+        public void Start(NavMeshAgent _agent)
         {
             agent = _agent;
-        }
 
-        // Start is called before the first frame update
-        void Start()
-        {
-            
             states.Add(States.MainPath, MainPath);
-            states.Add(States.FindSwitch, FindSwitch );
+            states.Add(States.FindSwitch, FindSwitch);
             states.Add(States.FindCollectable, FindCollectable);
-
-            // How do I find the waypoints if this class can't be in the scene?
-            
         }
 
-        // Update is called once per frame
-        void Update()
+        // Update is called once per frame in AgentSmartAI Update.
+        public void Update()
         {
             // These 2 lines are what actaully runs the state machine. It works by attempting to retrive the relevent function for the current state
             //then run the function if it successfully finds it.
@@ -72,16 +64,26 @@ namespace StateMachines
         /// </summary>
         private void MainPath()
         {
-            Waypoint currentWaypoint = waypoints[waypointIndex];
-            agent.SetDestination(currentWaypoint.Position);
+            
+            Waypoint currentWaypoint = waypoints[waypointIndex -1];
+            agent.SetDestination(currentWaypoint.transform.position);
 
-
-                /*What is the index? 
-              * set the next way point using the index.
-              * if destination reached, index += 1
-              * set next waypoint
-              * 
-              */
+            if (!agent.pathPending && agent.remainingDistance < 0.1f)
+            {
+                waypointIndex += 1;
+                ChangeState(States.MainPath);
+            }
+            if (!agent.pathPending && agent.path.status == NavMeshPathStatus.PathInvalid)
+            {
+                ChangeState(States.FindSwitch);
+            }
+            
+            /*What is the index? 
+          * set the next way point using the index.
+          * if destination reached, index += 1
+          * set next waypoint
+          * 
+          */
         }
 
         /// <summary>
@@ -90,12 +92,25 @@ namespace StateMachines
         /// </summary>
         private void FindSwitch()
         {
-            SwitchWaypoint closestPoint;
+            float shortestDistance = Mathf.Infinity;
+            SwitchWaypoint closestPoint = null;
             foreach (SwitchWaypoint waypoint in switchWaypoints)
             {
-
+                float distanceToSwitch = Vector3.Distance(agent.transform.position, waypoint.transform.position);
+                if (distanceToSwitch < shortestDistance)
+                {
+                    shortestDistance = distanceToSwitch;
+                    closestPoint = waypoint;
+                }
             }
-            
+
+            agent.SetDestination(closestPoint.transform.position);
+
+            if (!agent.pathPending && agent.remainingDistance < 0.2f)
+            {
+                GameObject.Destroy(closestPoint.gameObject);
+                ChangeState(States.MainPath);
+            }
 
             /*get switchwaypoints
              * distance test and set closest as destination

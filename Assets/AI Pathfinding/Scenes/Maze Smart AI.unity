@@ -3491,7 +3491,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh35290
+  m_Name: pb_Mesh18804
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -24540,7 +24540,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh35692
+  m_Name: pb_Mesh19222
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -26046,6 +26046,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateMachine:
     currentState: 0
+    agent: {fileID: 0}
     waypoints:
     - {fileID: 1416422396}
     - {fileID: 1664480109}
@@ -26056,8 +26057,9 @@ MonoBehaviour:
     - {fileID: 1251804320025899444}
     - {fileID: 1074204460}
     collectableWaypoints: []
+    waypointIndex: 1
+  agent: {fileID: 0}
   doorSwitch: {fileID: 7473036769706234432}
-  waypoints: []
 --- !u!1 &1664480107
 GameObject:
   m_ObjectHideFlags: 0
