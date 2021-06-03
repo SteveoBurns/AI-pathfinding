@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SmartAI;
+using UnityEngine.AI;
 
 namespace StateMachines
 {
@@ -15,18 +16,20 @@ namespace StateMachines
 
     // The delegate that dictates what the functions for each state will look like.
     public delegate void StateDelegate();
-
+    [System.Serializable]
     public class StateMachine 
     {
         private Dictionary<States, StateDelegate> states = new Dictionary<States, StateDelegate>();
 
-        [SerializeField] private States currentState = States.MainPath;
+        [SerializeField] public States currentState = States.MainPath;
+
+        public NavMeshAgent agent;
 
         public Waypoint[] waypoints;
         public SwitchWaypoint[] switchWaypoints;
         public CollectableWaypoint[] collectableWaypoints;
 
-        private int waypointIndex = 0;
+        public int waypointIndex = 0;
 
         // This is used to change the state from anywhere within the code that has reference to the state machine.
         public void ChangeState(States _newState)
@@ -35,6 +38,10 @@ namespace StateMachines
                 currentState = _newState;
         }
 
+        public StateMachine(NavMeshAgent _agent)
+        {
+            agent = _agent;
+        }
 
         // Start is called before the first frame update
         void Start()
@@ -65,7 +72,11 @@ namespace StateMachines
         /// </summary>
         private void MainPath()
         {
-             /*What is the index? 
+            Waypoint currentWaypoint = waypoints[waypointIndex];
+            agent.SetDestination(currentWaypoint.Position);
+
+
+                /*What is the index? 
               * set the next way point using the index.
               * if destination reached, index += 1
               * set next waypoint
@@ -79,6 +90,13 @@ namespace StateMachines
         /// </summary>
         private void FindSwitch()
         {
+            SwitchWaypoint closestPoint;
+            foreach (SwitchWaypoint waypoint in switchWaypoints)
+            {
+
+            }
+            
+
             /*get switchwaypoints
              * distance test and set closest as destination
              * when reached, switch to main path.

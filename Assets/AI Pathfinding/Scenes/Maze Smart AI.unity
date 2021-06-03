@@ -24376,7 +24376,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh16768
+  m_Name: pb_Mesh19488
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -26044,7 +26044,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cc3a85705e615547824d8a12a27ca5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stateMachine:
+    currentState: 0
+    waypoints:
+    - {fileID: 1416422396}
+    - {fileID: 1664480109}
+    - {fileID: 1280948278}
+    switchWaypoints:
+    - {fileID: 3780953245940091522}
+    - {fileID: 1251804321675706490}
+    - {fileID: 1251804320025899444}
+    - {fileID: 1074204460}
+    collectableWaypoints: []
   doorSwitch: {fileID: 7473036769706234432}
+  waypoints: []
 --- !u!1 &1664480107
 GameObject:
   m_ObjectHideFlags: 0
@@ -26095,7 +26108,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh16490
+  m_Name: pb_Mesh19486
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -34702,7 +34715,7 @@ GameObject:
   - component: {fileID: 5629495199518088096}
   - component: {fileID: 517056506}
   m_Layer: 0
-  m_Name: Green Door 2
+  m_Name: Door 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34723,7 +34736,7 @@ GameObject:
   - component: {fileID: 5629495199655008087}
   - component: {fileID: 1121921914}
   m_Layer: 0
-  m_Name: Green Door 1
+  m_Name: Door 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34744,7 +34757,7 @@ GameObject:
   - component: {fileID: 5629495198838672576}
   - component: {fileID: 1812005890}
   m_Layer: 0
-  m_Name: Green Door 4
+  m_Name: Door 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
