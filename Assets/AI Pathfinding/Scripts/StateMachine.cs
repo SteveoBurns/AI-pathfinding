@@ -29,7 +29,9 @@ namespace StateMachines
         public Waypoint[] waypoints;
         public List<SwitchWaypoint> switchWaypoints;
         public CollectableWaypoint[] collectableWaypoints;
-        public int waypointIndex = 1;
+        public int waypointIndex = 0;
+        public int collectableIndex = 0;
+
 
         // This is used to change the state from anywhere within the code that has reference to the state machine.
         public void ChangeState(States _newState)
@@ -45,6 +47,8 @@ namespace StateMachines
             states.Add(States.MainPath, MainPath);
             states.Add(States.FindSwitch, FindSwitch);
             states.Add(States.FindCollectable, FindCollectable);
+
+            collectableIndex = Mathf.Clamp(collectableIndex, 0, 3);
         }
 
         // Update is called once per frame in AgentSmartAI Update.
@@ -65,23 +69,26 @@ namespace StateMachines
         private void MainPath()
         {
             
-            Waypoint currentWaypoint = waypoints[waypointIndex -1];
+            Waypoint currentWaypoint = waypoints[waypointIndex];
             agent.SetDestination(currentWaypoint.transform.position);
 
-            if (!agent.pathPending && agent.remainingDistance < 0.01f)
+            if (!agent.pathPending &&  agent.remainingDistance < 0.01f)
             {
+                currentWaypoint.gameObject.SetActive(false);
                 waypointIndex += 1;
-                ChangeState(States.MainPath);
-                /*
-                currentWaypoint = waypoints[waypointIndex - 1];
-                agent.SetDestination(currentWaypoint.transform.position);
-                */
+                ChangeState(States.MainPath);                
             }
             if (agent.hasPath && agent.path.status == NavMeshPathStatus.PathPartial && agent.remainingDistance <= 10)
             {
                 ChangeState(States.FindSwitch);
             }
-            
+            /*
+            if (!agent.pathPending && agent.remainingDistance < 0.01f && waypointIndex == 4)
+            {
+                SmartAI.AgentSmartAI.EndGame();
+            } 
+            */
+
             /*What is the index? 
           * set the next way point using the index.
           * if destination reached, index += 1
@@ -115,7 +122,7 @@ namespace StateMachines
             {
                 
                 ChangeState(States.MainPath);
-                //switchWaypoints.Remove(closestPoint);
+                
                 
             }
 
@@ -130,6 +137,25 @@ namespace StateMachines
         /// </summary>
         private void FindCollectable()
         {
+            if (collectableIndex <= 2)
+            {
+                CollectableWaypoint waypoint = collectableWaypoints[collectableIndex];
+                agent.SetDestination(waypoint.transform.position);
+
+                if (!agent.pathPending && agent.remainingDistance < 0.01f)
+                {
+                    collectableIndex += 1;
+                    ChangeState(States.FindCollectable);
+
+                    waypoint.gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                SmartAI.AgentSmartAI.collectablesFound = true;
+                ChangeState(States.MainPath);
+            }
+
             /* get collectable waypoints
              * cycle through all in a for loop?
              * when done switch back to main path.
@@ -143,7 +169,8 @@ namespace StateMachines
      * Actually, I could make the argument in each function a navmeshagent, then when calling it just reference "this".
      * Nope, cause I'm calling the ChangeStates function, not the functions in the dictionary, duh!
      * 
-     * 
+     * 7/6 - Started having trouble with the agent stopping next to the second main waypoint and not going after the next one.
+     * Code was all working fine before that? Could be an issue with the navMesh maybe??
      * 
      */
 }

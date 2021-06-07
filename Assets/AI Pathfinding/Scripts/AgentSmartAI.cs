@@ -12,9 +12,7 @@ namespace SmartAI
         public StateMachine stateMachine;
 
         public NavMeshAgent agent;
-        [SerializeField] private GameObject doorSwitch;
-
-        
+        public static bool collectablesFound = false;        
 
         // Start is called before the first frame update
         void Start()
@@ -22,17 +20,24 @@ namespace SmartAI
             agent = gameObject.GetComponent<NavMeshAgent>();
 
             stateMachine.Start(agent);
+
+            collectablesFound = false;
         }
-
-        
-              
-
 
         // Update is called once per frame
         void Update()
         {
             stateMachine.Update();
-            
+
+            if(stateMachine.currentState == States.FindSwitch && stateMachine.waypointIndex == 3 && agent.remainingDistance <= 5 && !collectablesFound)
+            {
+                stateMachine.ChangeState(States.FindCollectable); 
+            }            
+        }
+
+        public static void EndGame()
+        {
+            Debug.Log("End Game");
         }
     }
 }
