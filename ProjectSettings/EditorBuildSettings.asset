@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/AI Pathfinding/Scenes/Main Menu.unity
-    guid: abd173e8694d1414ea819167c6fd1968
+    path: Assets/AI Pathfinding/Scenes/Main Menu Smart AI.unity
+    guid: fed543f07ef0d394281a370ad3d78a22
   - enabled: 1
-    path: Assets/AI Pathfinding/Scenes/Maze.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/AI Pathfinding/Scenes/Maze Smart AI.unity
+    guid: 588189ae3e7ba514c9b3d7eda5df14f4
   m_configObjects: {}
