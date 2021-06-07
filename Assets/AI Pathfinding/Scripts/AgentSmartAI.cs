@@ -39,7 +39,7 @@ namespace SmartAI
         public void EndGame()
         {
             endPanel.SetActive(true);
-            Time.timeScale = 0;
+            
             Debug.Log("End Game");
         }
 
@@ -87,7 +87,7 @@ namespace SmartAI
                     stateMachine.ChangeState(States.FindSwitch);
                 }
                 // Finish game when reaching the last waypoint.
-                if (!agent.pathPending && agent.remainingDistance < 0.01f && stateMachine.waypointIndex == 5)
+                if (!agent.pathPending && agent.remainingDistance < 0.01f && stateMachine.waypointIndex == 6)
                 {
                     EndGame();
                 } 

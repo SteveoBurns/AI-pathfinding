@@ -72,7 +72,7 @@ namespace StateMachines
         /// </summary>
         private void MainPath()
         {
-            if (waypointIndex <= 4)
+            if (waypointIndex <= 5)
             {
                 Waypoint currentWaypoint = waypoints[waypointIndex -1];
 
