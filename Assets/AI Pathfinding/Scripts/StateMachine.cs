@@ -29,9 +29,9 @@ namespace StateMachines
         public Waypoint[] waypoints;
         public List<SwitchWaypoint> switchWaypoints;
         public CollectableWaypoint[] collectableWaypoints;
-        public int waypointIndex = 0;
+        public int waypointIndex = 1;
         public int collectableIndex = 0;
-
+        
 
         // This is used to change the state from anywhere within the code that has reference to the state machine.
         public void ChangeState(States _newState)
@@ -60,6 +60,8 @@ namespace StateMachines
                 state.Invoke();
             else
                 Debug.LogError($"No state function set for state {currentState}.");
+
+            
         }
 
         /// <summary>
@@ -68,10 +70,10 @@ namespace StateMachines
         /// </summary>
         private void MainPath()
         {
-            
-            Waypoint currentWaypoint = waypoints[waypointIndex];
-            agent.SetDestination(currentWaypoint.transform.position);
+            Waypoint currentWaypoint = waypoints[waypointIndex -1];
 
+            agent.SetDestination(currentWaypoint.transform.position);
+            /*
             if (!agent.pathPending &&  agent.remainingDistance < 0.01f)
             {
                 currentWaypoint.gameObject.SetActive(false);
@@ -118,13 +120,7 @@ namespace StateMachines
             agent.SetDestination(closestPoint.transform.position);
 
 
-            if (!agent.pathPending && agent.remainingDistance < 0.2f)
-            {
-                
-                ChangeState(States.MainPath);
-                
-                
-            }
+            
 
             /*get switchwaypoints
              * distance test and set closest as destination
