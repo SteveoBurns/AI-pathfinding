@@ -27,7 +27,7 @@ namespace StateMachines
         public NavMeshAgent agent;
 
         public Waypoint[] waypoints;
-        public SwitchWaypoint[] switchWaypoints;
+        public List<SwitchWaypoint> switchWaypoints;
         public CollectableWaypoint[] collectableWaypoints;
         public int waypointIndex = 1;
 
@@ -68,12 +68,16 @@ namespace StateMachines
             Waypoint currentWaypoint = waypoints[waypointIndex -1];
             agent.SetDestination(currentWaypoint.transform.position);
 
-            if (!agent.pathPending && agent.remainingDistance < 0.1f)
+            if (!agent.pathPending && agent.remainingDistance < 0.01f)
             {
                 waypointIndex += 1;
                 ChangeState(States.MainPath);
+                /*
+                currentWaypoint = waypoints[waypointIndex - 1];
+                agent.SetDestination(currentWaypoint.transform.position);
+                */
             }
-            if (!agent.pathPending && agent.path.status == NavMeshPathStatus.PathInvalid)
+            if (agent.hasPath && agent.path.status == NavMeshPathStatus.PathPartial && agent.remainingDistance <= 10)
             {
                 ChangeState(States.FindSwitch);
             }
@@ -106,10 +110,13 @@ namespace StateMachines
 
             agent.SetDestination(closestPoint.transform.position);
 
+
             if (!agent.pathPending && agent.remainingDistance < 0.2f)
             {
-                GameObject.Destroy(closestPoint.gameObject);
+                
                 ChangeState(States.MainPath);
+                //switchWaypoints.Remove(closestPoint);
+                
             }
 
             /*get switchwaypoints
