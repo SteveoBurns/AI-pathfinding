@@ -5,6 +5,25 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     /// <summary>
+    /// Loads whichever scene is input
+    /// </summary>
+    /// <param name="_sceneName">name of the scene to load</param>
+    public void LoadScene(string _sceneName)
+    {
+        SceneManager.LoadScene(_sceneName);
+    }
+
+    public void Pause()
+    {
+        if (Time.timeScale == 1)
+        {
+            Time.timeScale = 0;
+        }
+        else
+            Time.timeScale = 1;
+    }
+
+    /// <summary>
     /// Loads the Main Menu scene
     /// </summary>
     public void BackToMainMenu()

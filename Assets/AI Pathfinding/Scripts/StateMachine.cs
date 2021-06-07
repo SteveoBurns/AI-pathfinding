@@ -22,13 +22,16 @@ namespace StateMachines
     {
         private Dictionary<States, StateDelegate> states = new Dictionary<States, StateDelegate>();
 
+        public AgentSmartAI agentSmartAI;
+
         [SerializeField] public States currentState = States.MainPath;
 
         public NavMeshAgent agent;
-
+        [Header("Waypoints")]
         public Waypoint[] waypoints;
         public List<SwitchWaypoint> switchWaypoints;
         public CollectableWaypoint[] collectableWaypoints;
+        [Header("Waypoint Indexes")]
         public int waypointIndex = 1;
         public int collectableIndex = 0;
         
@@ -66,42 +69,24 @@ namespace StateMachines
 
         /// <summary>
         /// This will get the next waypoint for the main path and set the agents destination as that.
-        /// Might have to put used waypoints into a new []?? can use an int index maybe? that will remeber the waypoint in the [] it was up too.
         /// </summary>
         private void MainPath()
         {
-            Waypoint currentWaypoint = waypoints[waypointIndex -1];
+            if (waypointIndex <= 4)
+            {
+                Waypoint currentWaypoint = waypoints[waypointIndex -1];
 
-            agent.SetDestination(currentWaypoint.transform.position);
-            /*
-            if (!agent.pathPending &&  agent.remainingDistance < 0.01f)
-            {
-                currentWaypoint.gameObject.SetActive(false);
-                waypointIndex += 1;
-                ChangeState(States.MainPath);                
-            }
-            if (agent.hasPath && agent.path.status == NavMeshPathStatus.PathPartial && agent.remainingDistance <= 10)
-            {
-                ChangeState(States.FindSwitch);
-            }
-            /*
-            if (!agent.pathPending && agent.remainingDistance < 0.01f && waypointIndex == 4)
-            {
-                SmartAI.AgentSmartAI.EndGame();
-            } 
-            */
+                agent.SetDestination(currentWaypoint.transform.position);
 
-            /*What is the index? 
-          * set the next way point using the index.
-          * if destination reached, index += 1
-          * set next waypoint
-          * 
-          */
+            }
+            else
+            {
+                agentSmartAI.EndGame();
+            }            
         }
 
         /// <summary>
         /// This will get the switch waypoints and test for the closest one then set that as the destination
-        /// Might need a function setdestination on the agent that i can call from here?? for all states?
         /// </summary>
         private void FindSwitch()
         {
@@ -119,13 +104,6 @@ namespace StateMachines
 
             agent.SetDestination(closestPoint.transform.position);
 
-
-            
-
-            /*get switchwaypoints
-             * distance test and set closest as destination
-             * when reached, switch to main path.
-             */
         }
 
         /// <summary>
@@ -146,16 +124,14 @@ namespace StateMachines
                     waypoint.gameObject.SetActive(false);
                 }
             }
+            // Once all collecatbles are found
             else
             {
                 SmartAI.AgentSmartAI.collectablesFound = true;
+                waypointIndex -= 2; // Have to set this back so the agent can follow the main path again properly.
                 ChangeState(States.MainPath);
             }
 
-            /* get collectable waypoints
-             * cycle through all in a for loop?
-             * when done switch back to main path.
-             */
         }
     }
     /*Journal
@@ -167,6 +143,11 @@ namespace StateMachines
      * 
      * 7/6 - Started having trouble with the agent stopping next to the second main waypoint and not going after the next one.
      * Code was all working fine before that? Could be an issue with the navMesh maybe??
+     * Fix - Still not exactly sure what was happening with the agent not recognising the last way point? I put another one in before the last door
+     * and the agent then did what it was meant too and switched into the collectable state.
+     * 
+     * I had to minus from the waypoint index after finding all the collectables so as to not get into the same issue with the agent not recognising the last waypoint, it 
+     * not goes to the second last one then goes for the switch and then finally the last waypoint.
      * 
      */
 }
