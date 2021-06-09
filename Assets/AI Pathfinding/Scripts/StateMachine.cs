@@ -103,7 +103,7 @@ namespace StateMachines
             }
 
             agent.SetDestination(closestPoint.transform.position);
-
+            
         }
 
         /// <summary>
